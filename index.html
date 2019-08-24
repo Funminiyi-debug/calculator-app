@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator App</title>
+	<style>
+		.numbers {
+			padding-top: 2rem;
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			grid-auto-rows: repeat(5, 1fr);
+			color: white;
+			background-color: black;
+			grid-row-gap: 0rem;
+			grid-column-gap: 0rem;
+			/*grid-area: spaced-evenly;*/
+		}
+
+		.box {
+			border: 1px solid white;
+			text-align: center;
+			cursor: pointer;
+			height: 2rem;
+			background-color: green;
+			/*padding: 0.2rem;
+*/		
+			line-height: 1.2rem;
+			transform: translateY(-50%);
+		}
+
+		.box:hover {
+			background-color: white;
+			color: black;
+		}
+
+		.container {
+			width: 350px;
+			margin: 10px;	
+			border-radius: 2px;
+			border: 10px solid black	
+		}
+	
+		.calculator-screen {
+			width: 350px;
+			height: 120px;
+			text-align: center;
+			background-color: lightgreen;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			z-index: -1;
+
+			/*transform: translateY(-50%);*/
+		}
+
+		.calculated-numbers {
+			position: absolute;
+			top: 1rem;
+			/*z-index: -1;*/
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="calculator-screen">
+			
+			<p id="calculated-numbers"></p>
+			
+			<p id="calculated-values">0</p>
+
+		</div>
+
+		<div class="calculator-panel">
+			<div class="numbers">	
+				<div class="box 1">AC</div>
+				<div class="box 2">+/-</div>
+				<div class="box 3">%</div>
+				<div class="box 4">/</div>
+				<div class="box 5">1</div>
+				<div class="box 6">2</div>
+				<div class="box 7">3</div>
+				<div class="box 8">*</div>
+				<div class="box 9">4</div>
+				<div class="box 10">5</div>
+				<div class="box 11">6</div>
+				<div class="box 12">-</div>
+				<div class="box 13">7</div>
+				<div class="box 14">8</div>
+				<div class="box 15">9</div>
+				<div class="box 16">+</div>
+				<div class="box 17">.</div>
+				<div class="box 18">0</div>
+				<div class="box 19">DEL</div>
+				<div class="box 20">=</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+
+		const fields = [...document.getElementsByClassName('box')]
+		const screen = document.getElementById("calculated-numbers")
+		const calculatedValue = document.getElementById('calculated-values')
+
+
+			
+		fields.forEach((field, index, fields) => {
+			field.addEventListener('click', (e) => {
+			if (e.target === fields[0]) {
+				
+				calculatedValue.textContent = '0'
+				screen.textContent = ''
+			} 
+			else if (e.target === fields[18]) {
+				screen.textContent =  screen.textContent.slice(0,screen.textContent.length-1)
+			} 
+			else {
+		
+			value = field.textContent
+					screen.textContent += value + ''
+					const answer = screen.textContent.split('=')[0]
+					fields[19].addEventListener('click', () => {
+
+						try {
+					 	calculatedValue.textContent = eval(answer)
+					 	screen.textContent = answer
+					 } catch {
+					 	calculatedValue.textContent = 'wrong operator'
+					 }
+					})
+				}
+
+			})
+		})
+		
+
+		 })
+	</script>
+</body>
+</html>
